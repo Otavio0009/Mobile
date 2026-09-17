@@ -6,13 +6,6 @@ body {
     margin: 0;
 }
 
-.container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 5. Header */
 header {
     display: flex;
     justify-content: space-between;
@@ -22,6 +15,12 @@ header {
 nav {
     display: flex;
     flex-direction: row;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .introduction {
