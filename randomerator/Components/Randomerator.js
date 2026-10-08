@@ -1,3 +1,4 @@
+import Slider from "@react-native-community/slider";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 export function Randomerator() {
@@ -8,7 +9,15 @@ export function Randomerator() {
             </Text>
             <View style={styles.content}>
                 <Text style={styles.result}>100</Text>
-
+                
+                <Slider
+                    style={{height: 30}}
+                    minimumValue={6}
+                    maximumValue={100}
+                    thumbTintColor="#3f75fc"
+                    maximumTrackTintColor="#33aaff"
+                    minimumTrackTintColor="#c7dceb"
+                />
                 <Pressable style={styles.buttonPimary}>
                     <Text style={styles.buttonText}>
                         Generate
@@ -33,6 +42,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: "bold",
+        color: "#565656",
     },
 
     content: {
