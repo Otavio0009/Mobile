@@ -1,96 +1,122 @@
 import Slider from "@react-native-community/slider";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import {useState} from "react";
-import { Button } from "./Button";
+import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
+import { Button, BUTTON_DANGER, BUTTON_SECONDARY, BUTTON_SUCCESS } from "./Button";
 
 export function Randomerator() {
-    const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
 
-    function incrementar() {
-        setValue(value + 1)
-    }
+  function incrementar() {
+    setValue((atual) => atual + 1);
+  }
 
-    function decrementar () {
-        if (value > 0) {
-            setValue(value - 1)
-        }
-    }
+  function decrementar() {
+    setValue((atual) => atual - 1);
+  }
 
-    function zera () {
-        setValue(value - value)
-    }
+  function zerar() {
+    setValue(0);
+  }
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>
-                Rodomerator
-            </Text>
-            <View style={styles.content}>
-                <Text style={styles.result}>{value}</Text>
-                
-                <Slider
-                    style={{height: 30}}
-                    minimumValue={6}
-                    maximumValue={100}
-                    thumbTintColor="#3f75fc"
-                    maximumTrackTintColor="#33aaff"
-                    minimumTrackTintColor="#c7dceb"
-                    value={1}
-                />
+  function randomizar() {
+    const numeroAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+    setValue(numeroAleatorio);
+  }
 
-                <Slider
-                    style={{height: 30}}
-                    minimumValue={6}
-                    maximumValue={100}
-                    thumbTintColor="#3f75fc"
-                    maximumTrackTintColor="#33aaff"
-                    minimumTrackTintColor="#c7dceb"
-                    value={100}
-                />
-                <Button text={"Decrementar"}
-                onClick={decrementar}/>
+  function alterarMin(novoMin) {
+    setMin(novoMin);
+    if (novoMin > max) setMax(novoMin);
+  }
 
-                <Button text={"Incrementar"}
-                onClick={incrementar}/>
+  function alterarMax(novoMax) {
+    setMax(novoMax);
+    if (novoMax < min) setMin(novoMax);
+  }
 
-                <Button text={"Zera"}
-                onClick={zera}/>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Randomerator</Text>
 
-            </View>
-        </View>
-    )
-} 
+      <View style={styles.content}>
+        <Text style={styles.result}>{value}</Text>
+
+        <Text style={styles.label}>Mínimo: {min}</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={min}
+          onValueChange={alterarMin}
+          thumbTintColor="#3f75fc"
+          maximumTrackTintColor="#33aaff"
+          minimumTrackTintColor="#c7dceb"
+        />
+
+        <Text style={styles.label}>Máximo: {max}</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={max}
+          onValueChange={alterarMax}
+          thumbTintColor="#3f75fc"
+          maximumTrackTintColor="#33aaff"
+          minimumTrackTintColor="#c7dceb"
+        />
+
+        <Button text="Incrementar" onClick={incrementar} />
+
+        <Button type={BUTTON_SECONDARY} text="Decrementar" onClick={decrementar} />
+
+        <Button type={BUTTON_DANGER} text="Zerar" onClick={zerar} />
+
+        <Button type={BUTTON_SUCCESS} text="Randomizar" onClick={randomizar} />
+      </View>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#d5d5d5",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 32,
+    gap: 32,
+  },
 
-    container: {
-        flex: 1,
-        backgroundColor: "#d5d5d5",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        padding: 32,
-        gap: 32,
-    },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#565656",
+  },
 
-    title: {
-        fontSize: 32,
-        fontWeight: "bold",
-        color: "#565656",
-    },
+  content: {
+    backgroundColor: "#fff",
+    width: "100%",
+    padding: 16,
+    borderRadius: 8,
+  },
 
-    content: {
-        backgroundColor: "#fff",
-        width: "100%",
-        padding: 16,
-        borderRadius: 8,
+  result: {
+    fontSize: 48,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#6c6c6c",
+  },
 
-    },
+  label: {
+    fontSize: 14,
+    color: "#6c6c6c",
+    marginTop: 12,
+  },
 
-    result: {
-        fontSize: 48,
-        fontWeight: "bolde",
-        textAlign: "center",
-        color: "#6c6c6c",
-
-    },
-})
+  slider: {
+    height: 30,
+  },
+});
